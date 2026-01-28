@@ -1,2 +1,30 @@
 ---
 # tasks file for php
+- name: Install PHP packages
+  apt:
+    name: "{{ item }}"
+    state: started
+  with_items:
+    - php
+    - libapache2-mod-php
+    - php-mysql
+    - php-cli
+    - php-curl
+    - php-gd
+    - php-mbstring
+    - php-xml
+    - php-zip
+  notify:
+    - Restart apache2
+
+- name: Copy a PHP info test file to web root
+  copy:
+    src: info.php.j2
+    dest: /var/www/html/info.php
+    mode: '0644'
+  
+- name: Restart apache2
+  service:
+    name: apache2
+    state: restarted
+  listen: "Restart apache2"
