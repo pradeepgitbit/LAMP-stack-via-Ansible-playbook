@@ -1,0 +1,11 @@
+---
+- name: Install LAMP Stack
+  hosts: lamp_server
+  become: true
+  gather_facts: true
+
+  roles:
+    - apache
+    - mysql
+    - php
+    
