@@ -1,2 +1,19 @@
 ---
 # tasks file for mysql
+- name: Install Mariadb server and required Python packages
+  apt:
+    name: "{{ item }}"
+    state: present
+    with_items:
+      - mariadb-server
+      - python3-mysqldb         # Required for Ansible MySQL modules
+
+- name: Start and enable MySQL service 
+  service:
+    name: mysql
+    state: started
+    enabled: true
+
+# Note: Setting the root password and securing MySQL often involves
+# more complex tasks using 'mysql_user' or 'shell' modules and variables
+# for security. This is a simplified example.
